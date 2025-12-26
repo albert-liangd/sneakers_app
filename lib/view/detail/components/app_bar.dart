@@ -12,19 +12,29 @@ PreferredSize? customAppBarDe(ctx) {
       backgroundColor: Colors.transparent,
       centerTitle: true,
       title: Text("Nike", style: AppThemes.detailsAppBar),
-      leading: IconButton(
-        onPressed: () {
-          Navigator.pop(ctx);
-        },
-        icon: Icon(
-          Icons.arrow_back,
-          color: AppConstantsColor.darkTextColor,
+      leading: Semantics(
+        identifier: 'detail_back_button',
+        button: true,
+        label: '返回',
+        child: IconButton(
+          onPressed: () {
+            Navigator.pop(ctx);
+          },
+          icon: Icon(
+            Icons.arrow_back,
+            color: AppConstantsColor.darkTextColor,
+          ),
         ),
       ),
       actions: [
-        IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.favorite_border),
+        Semantics(
+          identifier: 'detail_favorite_button',
+          button: true,
+          label: '收藏',
+          child: IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.favorite_border),
+          ),
         ),
       ],
     ),

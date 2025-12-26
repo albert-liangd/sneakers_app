@@ -76,15 +76,20 @@ class _BodyBagViewState extends State<BodyBagView>
   materialButton(width, height) {
     return FadeAnimation(
       delay: 3,
-      child: MaterialButton(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        minWidth: width / 1.2,
-        height: height / 15,
-        color: AppConstantsColor.materialButtonColor,
-        onPressed: () {},
-        child: Text(
-          "下一步",
-          style: TextStyle(color: AppConstantsColor.lightTextColor),
+      child: Semantics(
+        identifier: 'bag_checkout_button',
+        button: true,
+        label: '结算下一步',
+        child: MaterialButton(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          minWidth: width / 1.2,
+          height: height / 15,
+          color: AppConstantsColor.materialButtonColor,
+          onPressed: () {},
+          child: Text(
+            "下一步",
+            style: TextStyle(color: AppConstantsColor.lightTextColor),
+          ),
         ),
       ),
     );
@@ -161,25 +166,30 @@ class _BodyBagViewState extends State<BodyBagView>
                           ),
                           Row(
                             children: [
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    itemsOnBag.remove(currentBagItem);
-                                    lengthsOfItemsOnBag = itemsOnBag.length;
-                                  });
-                                },
-                                child: Container(
-                                  width: 30,
-                                  height: 30,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.grey[300],
+                              Semantics(
+                                identifier: 'bag_item_remove_${index}',
+                                button: true,
+                                label: '减少商品数量',
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      itemsOnBag.remove(currentBagItem);
+                                      lengthsOfItemsOnBag = itemsOnBag.length;
+                                    });
+                                  },
+                                  child: Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.grey[300],
+                                    ),
+                                    child: Center(
+                                        child: Icon(
+                                      Icons.remove,
+                                      size: 15,
+                                    )),
                                   ),
-                                  child: Center(
-                                      child: Icon(
-                                    Icons.remove,
-                                    size: 15,
-                                  )),
                                 ),
                               ),
                               SizedBox(
@@ -189,20 +199,25 @@ class _BodyBagViewState extends State<BodyBagView>
                               SizedBox(
                                 width: 10,
                               ),
-                              GestureDetector(
-                                onTap: () {},
-                                child: Container(
-                                  width: 30,
-                                  height: 30,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.grey[300],
+                              Semantics(
+                                identifier: 'bag_item_add_${index}',
+                                button: true,
+                                label: '增加商品数量',
+                                child: GestureDetector(
+                                  onTap: () {},
+                                  child: Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.grey[300],
+                                    ),
+                                    child: Center(
+                                        child: Icon(
+                                      Icons.add,
+                                      size: 15,
+                                    )),
                                   ),
-                                  child: Center(
-                                      child: Icon(
-                                    Icons.add,
-                                    size: 15,
-                                  )),
                                 ),
                               ),
                             ],

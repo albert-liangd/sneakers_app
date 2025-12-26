@@ -53,24 +53,30 @@ class _BodyState extends State<Body> {
               itemCount: categories.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (ctx, index) {
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      selectedIndexOfCategory = index;
-                    });
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text(
-                      categories[index],
-                      style: TextStyle(
-                          fontSize: selectedIndexOfCategory == index ? 21 : 18,
-                          color: selectedIndexOfCategory == index
-                              ? AppConstantsColor.darkTextColor
-                              : AppConstantsColor.unSelectedTextColor,
-                          fontWeight: selectedIndexOfCategory == index
-                              ? FontWeight.bold
-                              : FontWeight.w400),
+                return Semantics(
+                  identifier: 'home_category_${index}',
+                  button: true,
+                  label: '分类 ${categories[index]}',
+                  selected: selectedIndexOfCategory == index,
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedIndexOfCategory = index;
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(
+                        categories[index],
+                        style: TextStyle(
+                            fontSize: selectedIndexOfCategory == index ? 21 : 18,
+                            color: selectedIndexOfCategory == index
+                                ? AppConstantsColor.darkTextColor
+                                : AppConstantsColor.unSelectedTextColor,
+                            fontWeight: selectedIndexOfCategory == index
+                                ? FontWeight.bold
+                                : FontWeight.w400),
+                      ),
                     ),
                   ),
                 );
@@ -95,25 +101,31 @@ class _BodyState extends State<Body> {
                 itemCount: featured.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedIndexOfFeatured = index;
-                      });
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: Text(
-                        featured[index],
-                        style: TextStyle(
-                            fontSize:
-                                selectedIndexOfFeatured == index ? 19 : 17,
-                            color: selectedIndexOfFeatured == index
-                                ? AppConstantsColor.darkTextColor
-                                : AppConstantsColor.unSelectedTextColor,
-                            fontWeight: selectedIndexOfFeatured == index
-                                ? FontWeight.bold
-                                : FontWeight.w400),
+                  return Semantics(
+                    identifier: 'home_featured_${index}',
+                    button: true,
+                    label: '筛选 ${featured[index]}',
+                    selected: selectedIndexOfFeatured == index,
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedIndexOfFeatured = index;
+                        });
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Text(
+                          featured[index],
+                          style: TextStyle(
+                              fontSize:
+                                  selectedIndexOfFeatured == index ? 19 : 17,
+                              color: selectedIndexOfFeatured == index
+                                  ? AppConstantsColor.darkTextColor
+                                  : AppConstantsColor.unSelectedTextColor,
+                              fontWeight: selectedIndexOfFeatured == index
+                                  ? FontWeight.bold
+                                  : FontWeight.w400),
+                        ),
                       ),
                     ),
                   );
@@ -129,19 +141,23 @@ class _BodyState extends State<Body> {
             itemCount: availableShoes.length,
             itemBuilder: (ctx, index) {
               ShoeModel model = availableShoes[index];
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (ctx) => DetailScreen(
-                        model: model,
-                        isComeFromMoreSection: false,
+              return Semantics(
+                identifier: 'home_product_card_${index}',
+                button: true,
+                label: '商品 ${model.name} ${model.model}',
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (ctx) => DetailScreen(
+                          model: model,
+                          isComeFromMoreSection: false,
+                        ),
                       ),
-                    ),
-                  );
-                },
-                child: Container(
+                    );
+                  },
+                  child: Container(
                   margin: EdgeInsets.all(15),
                   width: width / 1.5,
                   child: Stack(
@@ -164,11 +180,16 @@ class _BodyState extends State<Body> {
                               SizedBox(
                                 width: 120,
                               ),
-                              IconButton(
-                                onPressed: () {},
-                                icon: Icon(
-                                  Icons.favorite_border,
-                                  color: Colors.white,
+                              Semantics(
+                                identifier: 'home_product_favorite_${index}',
+                                button: true,
+                                label: '收藏商品',
+                                child: IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    Icons.favorite_border,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ],
@@ -216,18 +237,24 @@ class _BodyState extends State<Body> {
                       Positioned(
                         bottom: 10,
                         left: 170,
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: FaIcon(
-                            FontAwesomeIcons.arrowCircleRight,
-                            color: Colors.white,
-                            size: 25,
+                        child: Semantics(
+                          identifier: 'home_product_detail_${index}',
+                          button: true,
+                          label: '查看详情',
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: FaIcon(
+                              FontAwesomeIcons.arrowCircleRight,
+                              color: Colors.white,
+                              size: 25,
+                            ),
                           ),
                         ),
                       )
                     ],
                   ),
                 ),
+              ),
               );
             },
           ),
@@ -244,12 +271,17 @@ class _BodyState extends State<Body> {
         children: [
           Text("更多", style: AppThemes.homeMoreText),
           Expanded(child: Container()),
-          IconButton(
-              onPressed: () {},
-              icon: FaIcon(
-                CupertinoIcons.arrow_right,
-                size: 27,
-              ))
+          Semantics(
+            identifier: 'home_more_button',
+            button: true,
+            label: '查看更多商品',
+            child: IconButton(
+                onPressed: () {},
+                icon: FaIcon(
+                  CupertinoIcons.arrow_right,
+                  size: 27,
+                )),
+          )
         ],
       ),
     );
@@ -266,19 +298,23 @@ class _BodyState extends State<Body> {
           scrollDirection: Axis.horizontal,
           itemBuilder: (ctx, index) {
             ShoeModel model = availableShoes[index];
-            return GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (ctx) => DetailScreen(
-                      model: model,
-                      isComeFromMoreSection: true,
+            return Semantics(
+              identifier: 'home_grid_product_${index}',
+              button: true,
+              label: '商品 ${model.name} ${model.model}',
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (ctx) => DetailScreen(
+                        model: model,
+                        isComeFromMoreSection: true,
+                      ),
                     ),
-                  ),
-                );
-              },
-              child: Container(
+                  );
+                },
+                child: Container(
                 margin: EdgeInsets.all(10),
                 width: width / 2.24,
                 height: height / 4.3,
@@ -309,11 +345,16 @@ class _BodyState extends State<Body> {
                     ),
                     Positioned(
                       left: 140,
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.favorite_border,
-                          color: AppConstantsColor.darkTextColor,
+                      child: Semantics(
+                        identifier: 'home_grid_favorite_${index}',
+                        button: true,
+                        label: '收藏商品',
+                        child: IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.favorite_border,
+                            color: AppConstantsColor.darkTextColor,
+                          ),
                         ),
                       ),
                     ),
@@ -371,6 +412,7 @@ class _BodyState extends State<Body> {
                     )
                   ],
                 ),
+              ),
               ),
             );
           }),

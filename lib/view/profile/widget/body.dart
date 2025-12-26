@@ -79,12 +79,17 @@ class _BodyProfileState extends State<BodyProfile> {
           SizedBox(
             width: 10,
           ),
-          IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.edit_outlined,
-                color: Colors.grey,
-              ))
+          Semantics(
+            identifier: 'profile_edit_button',
+            button: true,
+            label: '编辑个人资料',
+            child: IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.edit_outlined,
+                  color: Colors.grey,
+                )),
+          )
         ],
       ),
     );
@@ -123,41 +128,47 @@ class _BodyProfileState extends State<BodyProfile> {
                     itemCount: userStatus.length,
                     itemBuilder: (ctx, index) {
                       UserStatus status = userStatus[index];
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            statusCurrentIndex = index;
-                          });
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 5),
-                          child: Container(
-                            margin: EdgeInsets.all(5),
-                            width: 120,
-                            decoration: BoxDecoration(
-                              color: statusCurrentIndex == index
-                                  ? status.selectColor
-                                  : status.unSelectColor,
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  status.emoji,
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                                SizedBox(
-                                  width: 4,
-                                ),
-                                Text(
-                                  status.txt,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      color: AppConstantsColor.lightTextColor,
-                                      fontSize: 16),
-                                ),
-                              ],
+                      return Semantics(
+                        identifier: 'profile_status_${index}',
+                        button: true,
+                        label: '状态 ${status.txt}',
+                        selected: statusCurrentIndex == index,
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              statusCurrentIndex = index;
+                            });
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 5),
+                            child: Container(
+                              margin: EdgeInsets.all(5),
+                              width: 120,
+                              decoration: BoxDecoration(
+                                color: statusCurrentIndex == index
+                                    ? status.selectColor
+                                    : status.unSelectColor,
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    status.emoji,
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                  SizedBox(
+                                    width: 4,
+                                  ),
+                                  Text(
+                                    status.txt,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        color: AppConstantsColor.lightTextColor,
+                                        fontSize: 16),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),

@@ -23,25 +23,35 @@ PreferredSize? customAppBar() {
       actions: [
         Padding(
           padding: EdgeInsets.only(top: 8.0),
-          child: IconButton(
-            icon: FaIcon(
-              CupertinoIcons.search,
-              color: AppConstantsColor.darkTextColor,
-              size: 25,
+          child: Semantics(
+            identifier: 'home_search_button',
+            button: true,
+            label: '搜索',
+            child: IconButton(
+              icon: FaIcon(
+                CupertinoIcons.search,
+                color: AppConstantsColor.darkTextColor,
+                size: 25,
+              ),
+              onPressed: () {},
             ),
-            onPressed: () {},
           ),
         ),
-         
+
         Padding(
           padding: EdgeInsets.only(top: 8.0, right: 4),
-          child: IconButton(
-            icon: FaIcon(
-               CupertinoIcons.bell,
-              color: AppConstantsColor.darkTextColor,
-              size: 25,
+          child: Semantics(
+            identifier: 'home_notification_button',
+            button: true,
+            label: '通知',
+            child: IconButton(
+              icon: FaIcon(
+                 CupertinoIcons.bell,
+                color: AppConstantsColor.darkTextColor,
+                size: 25,
+              ),
+              onPressed: () {},
             ),
-            onPressed: () {},
           ),
         ),
       ],

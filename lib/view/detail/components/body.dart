@@ -190,17 +190,22 @@ class details extends State<DetailsBody> {
   materialButton(width, height) {
     return FadeAnimation(
       delay: 3.5,
-      child: MaterialButton(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        minWidth: width / 1.2,
-        height: height / 15,
-        color: AppConstantsColor.materialButtonColor,
-        onPressed: () {
-          AppMethods.addToCart(widget.model, context);
-        },
-        child: Text(
-          "加入购物袋",
-          style: TextStyle(color: AppConstantsColor.lightTextColor),
+      child: Semantics(
+        identifier: 'detail_add_to_cart_button',
+        button: true,
+        label: '加入购物袋',
+        child: MaterialButton(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          minWidth: width / 1.2,
+          height: height / 15,
+          color: AppConstantsColor.materialButtonColor,
+          onPressed: () {
+            AppMethods.addToCart(widget.model, context);
+          },
+          child: Text(
+            "加入购物袋",
+            style: TextStyle(color: AppConstantsColor.lightTextColor),
+          ),
         ),
       ),
     );
@@ -248,36 +253,42 @@ class details extends State<DetailsBody> {
                   itemCount: 4,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (ctx, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _isSelectedSize = index;
-                        });
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(right: 5),
-                        width: width / 4.4,
-                        height: height / 13,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                              color: _isSelectedSize == index
-                                  ? Colors.black
-                                  : Colors.grey,
-                              width: 1.5),
-                          color: _isSelectedSize == index
-                              ? Colors.black
-                              : AppConstantsColor.backgroundColor,
-                        ),
-                        child: Center(
-                          child: Text(
-                            sizes[index].toString(),
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                    return Semantics(
+                      identifier: 'detail_size_${index}',
+                      button: true,
+                      label: '尺码 ${sizes[index]}',
+                      selected: _isSelectedSize == index,
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _isSelectedSize = index;
+                          });
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(right: 5),
+                          width: width / 4.4,
+                          height: height / 13,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
                                 color: _isSelectedSize == index
-                                    ? Colors.white
-                                    : Colors.black),
+                                    ? Colors.black
+                                    : Colors.grey,
+                                width: 1.5),
+                            color: _isSelectedSize == index
+                                ? Colors.black
+                                : AppConstantsColor.backgroundColor,
+                          ),
+                          child: Center(
+                            child: Text(
+                              sizes[index].toString(),
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: _isSelectedSize == index
+                                      ? Colors.white
+                                      : Colors.black),
+                            ),
                           ),
                         ),
                       ),
@@ -307,44 +318,56 @@ class details extends State<DetailsBody> {
           Expanded(
             child: Container(),
           ),
-          Container(
-            width: width / 9,
-            child: TextButton(
-              onPressed: () {
-                setState(() {
-                  _isSelectedCountry = false;
-                });
-              },
-              child: Text(
-                "UK",
-                style: TextStyle(
-                  fontWeight:
-                      _isSelectedCountry ? FontWeight.w400 : FontWeight.bold,
-                  color: _isSelectedCountry
-                      ? Colors.grey
-                      : AppConstantsColor.darkTextColor,
-                  fontSize: 19,
+          Semantics(
+            identifier: 'detail_size_uk_button',
+            button: true,
+            label: 'UK尺码',
+            selected: !_isSelectedCountry,
+            child: Container(
+              width: width / 9,
+              child: TextButton(
+                onPressed: () {
+                  setState(() {
+                    _isSelectedCountry = false;
+                  });
+                },
+                child: Text(
+                  "UK",
+                  style: TextStyle(
+                    fontWeight:
+                        _isSelectedCountry ? FontWeight.w400 : FontWeight.bold,
+                    color: _isSelectedCountry
+                        ? Colors.grey
+                        : AppConstantsColor.darkTextColor,
+                    fontSize: 19,
+                  ),
                 ),
               ),
             ),
           ),
-          Container(
-            width: width / 5,
-            child: TextButton(
-              onPressed: () {
-                setState(() {
-                  _isSelectedCountry = true;
-                });
-              },
-              child: Text(
-                "USA",
-                style: TextStyle(
-                  fontWeight:
-                      _isSelectedCountry ? FontWeight.bold : FontWeight.w400,
-                  color: _isSelectedCountry
-                      ? AppConstantsColor.darkTextColor
-                      : Colors.grey,
-                  fontSize: 20,
+          Semantics(
+            identifier: 'detail_size_usa_button',
+            button: true,
+            label: 'USA尺码',
+            selected: _isSelectedCountry,
+            child: Container(
+              width: width / 5,
+              child: TextButton(
+                onPressed: () {
+                  setState(() {
+                    _isSelectedCountry = true;
+                  });
+                },
+                child: Text(
+                  "USA",
+                  style: TextStyle(
+                    fontWeight:
+                        _isSelectedCountry ? FontWeight.bold : FontWeight.w400,
+                    color: _isSelectedCountry
+                        ? AppConstantsColor.darkTextColor
+                        : Colors.grey,
+                    fontSize: 20,
+                  ),
                 ),
               ),
             ),

@@ -23,27 +23,38 @@ class RoundedLisTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {},
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 8),
-        child: Container(
-          width: width,
-          height: height / 14,
-          child: ListTile(
-              leading: CircleAvatar(
-                backgroundColor: leadingBackColor,
-                radius: 25,
-                child: IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    icon,
-                    color: AppConstantsColor.lightTextColor,
+    String identifier = 'profile_${title.toLowerCase().replaceAll(' ', '_')}_tile';
+    return Semantics(
+      identifier: identifier,
+      button: true,
+      label: title,
+      child: InkWell(
+        onTap: () {},
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 8),
+          child: Container(
+            width: width,
+            height: height / 14,
+            child: ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: leadingBackColor,
+                  radius: 25,
+                  child: Semantics(
+                    identifier: '${identifier}_icon',
+                    button: true,
+                    label: '$title 图标',
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        icon,
+                        color: AppConstantsColor.lightTextColor,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              title: Text(title, style: AppThemes.profileRepeatedListTileTitle),
-              trailing: trailing),
+                title: Text(title, style: AppThemes.profileRepeatedListTileTitle),
+                trailing: trailing),
+          ),
         ),
       ),
     );
